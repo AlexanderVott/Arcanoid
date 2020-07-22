@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace RedDev.Game
 {
-	public class PlayerInputData : IComponentData
+	public class RigidBodyData : IComponentData
 	{
-		public Vector2 inputAxis;
-
+		public Rigidbody2D body;
 		public void Initialize(Actor actor)
 		{
+			body = actor.GetComponent<Rigidbody2D>();
 		}
 	}
 }

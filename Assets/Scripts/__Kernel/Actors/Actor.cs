@@ -19,7 +19,10 @@ namespace RedDev.Kernel.Actors
 		}
 	}
 
-	public interface IComponentData {}
+	public interface IComponentData
+	{
+		void Initialize(Actor actor);
+	}
 
 	public class ComponentActorMeta
 	{
@@ -179,7 +182,11 @@ namespace RedDev.Kernel.Actors
 			foreach (var attribute in attributes)
 				foreach (var type in attribute.types)
 					if (!_data.ContainsKey(type.GetHashCode()))
-						_data.Add(type.GetHashCode(), Activator.CreateInstance(type) as IComponentData);
+					{
+						var instanceData = Activator.CreateInstance(type) as IComponentData;
+						instanceData?.Initialize(this);
+						_data.Add(type.GetHashCode(), instanceData);
+					}
 		}
 
 		private void ConnectData<T>(T component) where T: ComponentActor
@@ -188,7 +195,11 @@ namespace RedDev.Kernel.Actors
 			foreach (var attribute in attributes)
 				foreach (var type in attribute.types)
 					if (!_data.ContainsKey(type.GetHashCode()))
-						_data.Add(type.GetHashCode(), Activator.CreateInstance(type) as IComponentData);
+					{
+						var instanceData = Activator.CreateInstance(type) as IComponentData;
+						instanceData?.Initialize(this);
+						_data.Add(type.GetHashCode(), instanceData);
+					}
 		}
 
 		private T HandleAdd<T>(T component/*, Type desiredType = null*/) where T: ComponentActor

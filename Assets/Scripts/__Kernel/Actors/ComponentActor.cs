@@ -10,12 +10,7 @@ namespace RedDev.Kernel.Actors
 		protected Actor _actor;
 
 		public Action<ComponentActor, bool> onChangeActiveState;
-
-		public virtual void SetActive(bool enable)
-		{
-			this.enabled = enable;
-		}
-
+		
 		#region Unity methods
 		protected virtual void Awake()
 		{

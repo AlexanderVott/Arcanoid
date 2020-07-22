@@ -35,7 +35,6 @@ namespace RedDev.Game
 
 		public void OnMove(InputAction.CallbackContext context)
 		{
-			Debug.Log($"Moving {context.ReadValue<Vector2>()}");
 			_data.inputAxis = context.ReadValue<Vector2>();
 		}
 	}

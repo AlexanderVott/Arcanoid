@@ -5,24 +5,27 @@ using UnityEngine;
 namespace RedDev.Game
 {
 	[ComponentData(typeof(PlayerInputData))]
-	public class InputMovementComponent : ComponentActor, ITick
+	[RequireComponent(typeof(Rigidbody2D))]
+	public class InputMovementComponent : ComponentActor, ITickFixed
 	{
 		[SerializeField]
 		private float _speed = 1f;
 
-		private PlayerInputData _data;
+		private PlayerInputData _inputData;
+		private Rigidbody2D _body;
 
 		public override void OnSetup()
 		{
 			base.OnSetup();
-			_data = _actor.GetData<PlayerInputData>();
+			_inputData = _actor.GetData<PlayerInputData>();
+			_body = GetComponent<Rigidbody2D>();
 		}
-
-		public void Tick()
+		
+		public void TickFixed()
 		{
-			Debug.Log(_data.inputAxis);
-			var axis = _data.inputAxis * _speed * Time.deltaTime;
-			transform.Translate(axis.x, axis.y, 0f);
+			var axis = _inputData.inputAxis * _speed;
+			axis.y = 0f;
+			_body.velocity = axis;
 		}
 	}
 }
