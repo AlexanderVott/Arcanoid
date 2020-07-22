@@ -8,7 +8,7 @@ using UnityEngine;
 namespace RedDev.Kernel.Actors
 {
 	[AttributeUsage(AttributeTargets.Class)]
-	public class ComponentDataAttribute: Attribute
+	public class ComponentDataAttribute : Attribute
 	{
 		private Type[] _types;
 		public Type[] types => _types;
@@ -67,7 +67,7 @@ namespace RedDev.Kernel.Actors
 		}
 		#endregion
 
-		protected virtual void Awake()
+		void Awake()
 		{
 			ConnectData();
 			OnSetup();
