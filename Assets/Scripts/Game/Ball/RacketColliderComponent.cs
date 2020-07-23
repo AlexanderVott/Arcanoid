@@ -1,7 +1,5 @@
 ﻿using RedDev.Game;
 using RedDev.Kernel.Actors;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 [ComponentData(typeof(RigidBodyData))]
@@ -13,17 +11,14 @@ public class RacketColliderComponent : ComponentActor
 	[SerializeField]
 	private float speed = 1f;
 
-	private RigidBodyData _body;
-
-	public override void OnSetup()
-	{
-		base.OnSetup();
-	}
-
+	private RigidBodyData _bodyData;
+	
 	public override void OnStart()
 	{
 		base.OnStart();
-		_body = _actor.GetData<RigidBodyData>();
+		_bodyData = _actor.GetData<RigidBodyData>();
+
+		_bodyData.body.velocity = Vector2.up * speed;
 	}
 
 	void OnCollisionEnter2D(Collision2D col)
@@ -32,7 +27,7 @@ public class RacketColliderComponent : ComponentActor
 		{
 			float factor = GetHitFactor(transform.position, col.transform.position, col.collider.bounds.size.x);
 			Vector2 dir = new Vector2(factor, 1).normalized;
-			_body.body.velocity = dir * speed;
+			_bodyData.body.velocity = dir * speed;
 		}
 	}
 
