@@ -21,12 +21,21 @@ namespace RedDev.Game.Tiles
 			}
 			var tilemap = tilemapObj.GetComponent<Tilemap>();
 
+			var breakeObj = GameObject.FindGameObjectWithTag(GameFieldManager.BREAKEFIELD_TAG);
+			if (breakeObj == null)
+			{
+				Debug.LogError($"Not found breakemap with tag {GameFieldManager.BREAKEFIELD_TAG} for {gameObject.name}");
+				return;
+			}
+			var breakeMap = breakeObj.GetComponent<Tilemap>();
+			gameField.RegisterFields(tilemap, breakeMap);
+
 			foreach (Vector3Int cell in tilemap.cellBounds.allPositionsWithin)
 			{
 				var tile = tilemap.GetTile<BaseBlockTile>(cell);
 				if (tile == null)
 					continue;
-				gameField.Add(tilemap, tile, cell);
+				gameField.Add(tile, cell);
 			}
 		}
 	}

@@ -9,6 +9,7 @@ namespace RedDev.Game.Managers
 	public class GameFieldManager : BaseManager
 	{
 		public static readonly string GAMEFIELD_TAG = "Gamefield";
+		public static readonly string BREAKEFIELD_TAG = "Breakefield";
 
 		private GridInformation _info;
 
@@ -17,9 +18,18 @@ namespace RedDev.Game.Managers
 
 		public BlockData this[Vector3Int cell] => _typesTiles.ContainsKey(cell) ? _typesTiles[cell] : null;
 
+		public Tilemap tilemap { get; private set; }
+		public Tilemap breakemap { get; private set; }
+
 		public override void Attach()
 		{
 			base.Attach();
+		}
+
+		public void RegisterFields(Tilemap tilemap, Tilemap breakemap)
+		{
+			this.tilemap = tilemap;
+			this.breakemap = breakemap;
 		}
 
 		public void Clear()
@@ -27,10 +37,10 @@ namespace RedDev.Game.Managers
 			_typesTiles.Clear();
 		}
 
-		public void Add(Tilemap owner, BaseBlockTile tile, Vector3Int place)
+		public void Add(BaseBlockTile tile, Vector3Int place)
 		{
 			if (!_typesTiles.ContainsKey(place))
-				_typesTiles.Add(place, new BlockData(owner, tile, place));
+				_typesTiles.Add(place, new BlockData(tilemap, breakemap, tile, place));
 		}
 
 		public void Remove(Vector3Int place)
@@ -53,7 +63,8 @@ namespace RedDev.Game.Managers
 				var tile = this[place];
 				if (tile != null)
 				{
-					tile.map.SetTile(place, null);
+					tilemap.SetTile(place, null);
+					breakemap.SetTile(place, null);
 				}
 				Remove(place);
 			}

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Object = UnityEngine.Object;
 
 namespace RedDev.Game.Tiles.Editor
@@ -40,23 +41,23 @@ namespace RedDev.Game.Tiles.Editor
 
 			EditorGUILayout.Space();
 
-			int count = EditorGUILayout.DelayedIntField("Number of Sprites", tile._brokeSprites != null ? tile._brokeSprites.Length : 0);
+			int count = EditorGUILayout.DelayedIntField("Number of broken tiles", tile._brokeSprites != null ? tile._brokeSprites.Length : 0);
 			if (count < 0)
 				count = 0;
 			if (tile._brokeSprites == null || tile._brokeSprites.Length != count)
 			{
-				Array.Resize<Sprite>(ref tile._brokeSprites, count);
+				Array.Resize(ref tile._brokeSprites, count);
 			}
 
 			if (count == 0)
 				return;
 
-			EditorGUILayout.LabelField("Place broken sprites.");
+			EditorGUILayout.LabelField("Place broken tiles.");
 			EditorGUILayout.Space();
 
 			for (int i = 0; i < count; i++)
 			{
-				tile._brokeSprites[i] = (Sprite)EditorGUILayout.ObjectField("Sprite " + (i + 1), tile._brokeSprites[i], typeof(Sprite), false, null);
+				tile._brokeSprites[i] = (Tile)EditorGUILayout.ObjectField("Tile " + (i + 1), tile._brokeSprites[i], typeof(Tile), false, null);
 			}
 		}
 
