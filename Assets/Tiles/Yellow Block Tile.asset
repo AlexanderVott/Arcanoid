@@ -35,5 +35,8 @@ MonoBehaviour:
   m_Flags: 1
   m_ColliderType: 1
   _defaultSprite: {fileID: 21300000, guid: 238ee1d82beebda428028ca519e7d6c6, type: 3}
-  _brokeSprites: []
+  _brokeSprites:
+  - {fileID: 11400000, guid: cd46b878574ecd948b7a0e4ae083716e, type: 2}
+  - {fileID: 11400000, guid: 7e9a08198cecfc142a1afcc309757bcc, type: 2}
+  - {fileID: 11400000, guid: 3a2955330f60b2741bf923f5d7c37211, type: 2}
   health: 3
