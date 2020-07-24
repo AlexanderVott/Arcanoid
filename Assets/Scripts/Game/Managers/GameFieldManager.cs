@@ -21,6 +21,8 @@ namespace RedDev.Game.Managers
 		public Tilemap tilemap { get; private set; }
 		public Tilemap breakemap { get; private set; }
 
+		public int counterDestroyedBlocks { get; private set; } = 0;
+
 		public override void Attach()
 		{
 			base.Attach();
@@ -35,6 +37,8 @@ namespace RedDev.Game.Managers
 		public void Clear()
 		{
 			_typesTiles.Clear();
+			_deletedCells.Clear();
+			counterDestroyedBlocks = 0;
 		}
 
 		public void Add(BaseBlockTile tile, Vector3Int place)
@@ -51,7 +55,10 @@ namespace RedDev.Game.Managers
 		public void DestroyTile(Vector3Int place)
 		{
 			if (!_deletedCells.Contains(place))
+			{
+				counterDestroyedBlocks++;
 				_deletedCells.Add(place);
+			}
 		}
 		
 		void LateUpdate()
