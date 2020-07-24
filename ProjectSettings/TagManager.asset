@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Gamefield
   - Breakefield
+  - Ball
   layers:
   - Default
   - TransparentFX

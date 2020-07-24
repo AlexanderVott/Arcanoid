@@ -29,7 +29,7 @@ namespace RedDev.Game.Tiles
 			}
 			var breakeMap = breakeObj.GetComponent<Tilemap>();
 			gameField.RegisterFields(tilemap, breakeMap);
-
+			gameField.Clear();
 			foreach (Vector3Int cell in tilemap.cellBounds.allPositionsWithin)
 			{
 				var tile = tilemap.GetTile<BaseBlockTile>(cell);
