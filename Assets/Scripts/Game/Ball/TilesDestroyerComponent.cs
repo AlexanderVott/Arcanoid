@@ -12,7 +12,7 @@ namespace RedDev.Game
 		private Tilemap tilemap;
 		[SerializeField]
 		private string tagTileMap = GameFieldManager.GAMEFIELD_TAG;
-
+		
 		private GameFieldManager gamefield;
 
 		public override void OnStart()
@@ -35,17 +35,18 @@ namespace RedDev.Game
 			if (tilemap == null || tilemap.gameObject != collision.gameObject) 
 				return;
 
+			Vector3Int lastCell = default;
 			foreach (var hit in collision.contacts)
 			{
 				hitPos.x = hit.point.x - 0.01f * hit.normal.x;
 				hitPos.y = hit.point.y - 0.01f * hit.normal.y;
 				var cell = tilemap.WorldToCell(hitPos);
-				var tile = tilemap.GetTile<BaseBlockTile>(cell);
-				if (tile == null) 
+				if (lastCell == cell)
 					continue;
-
+				lastCell = cell;
+				var tile = tilemap.GetTile<BaseBlockTile>(cell);
 				var block = gamefield[cell];
-				if (block == null)
+				if (tile == null || block == null) 
 					continue;
 				tile.Hit(block, cell);
 			}

@@ -45,6 +45,13 @@ namespace RedDev.Game.Tiles
 
 		public override void RefreshTile(Vector3Int position, ITilemap tilemap)
 		{
+#if UNITY_EDITOR
+			if (!Application.isPlaying)
+			{
+				base.RefreshTile(position, tilemap); 
+				return;
+			}
+#endif
 			var gamefield = Core.Get<GameFieldManager>();
 			Vector3Int cell;
 			for (int y = -1; y <= 1; y++)
@@ -66,8 +73,20 @@ namespace RedDev.Game.Tiles
 		public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
 		{
 			base.GetTileData(position, tilemap, ref tileData);
-			/*if (health > 0)
-				tileData.sprite = defaultSprite;*/
+#if UNITY_EDITOR
+			if (!Application.isPlaying)
+				return;
+#endif
+			if (_brokeSprites.Length == 0)
+				return;
+			var gamefield = Core.Get<GameFieldManager>();
+			var cell = gamefield[position];
+
+			int index = ((health - cell.health) * _brokeSprites.Length) / health;
+			if (index < _brokeSprites.Length)
+				tileData.sprite = _brokeSprites[index];
+			else
+				Debug.Log(index);
 		}
 	}
 }
