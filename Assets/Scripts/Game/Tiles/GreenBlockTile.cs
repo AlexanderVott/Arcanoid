@@ -9,12 +9,7 @@ namespace RedDev.Game.Tiles
 	{
 		public override void Hit(BlockData block, Vector3Int cell)
 		{
-			if (block.health <= 0)
-			{
-				Destroy(cell);
-				return;
-			}
-			if (--block.health == 0)
+			if (--block.health <= 0)
 				Destroy(cell);
 			else
 			{
